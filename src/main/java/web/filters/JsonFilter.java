@@ -10,7 +10,7 @@ public class JsonFilter implements Filter {
     public void destroy() { }
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
-        if(req.getContentType().equals("application/json") || req.getContentType() == null){
+        if(req.getContentType() == null || req.getContentType().equals("application/json") ){
             chain.doFilter(req, resp);
         }
         else{

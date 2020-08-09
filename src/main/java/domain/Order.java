@@ -9,6 +9,7 @@ public class Order {
     private String submittedBy;
     private String item;
     private Integer quantity;
+
 //todo generate on server
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }

@@ -2,6 +2,7 @@ package web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import domain.Order;
+import exception.UserNotFoundException;
 import service.OrderService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +23,8 @@ public class PostCommand extends Command {
                 Order order = new ObjectMapper().readValue(req.getReader(), Order.class);
 
                 OrderService.postOrder(order);
-                resp.getWriter().write(OrderService.getOrdersByCurrentUser().toString());
-            } catch (IOException e) {
+                resp.getWriter().write("Order is accepted");
+            } catch (IOException | UserNotFoundException e) {
                 e.printStackTrace();
             }
         }

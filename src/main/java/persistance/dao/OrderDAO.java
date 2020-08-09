@@ -2,7 +2,10 @@ package persistance.dao;
 
 import domain.Order;
 import domain.User;
+import exception.OrderNotFoundException;
+import exception.UserNotFoundException;
 import persistance.FakeDB;
+import utils.UserContext;
 
 import java.util.List;
 
@@ -12,34 +15,34 @@ public class OrderDAO{
         return FakeDB.getInstance().getOrders();
     }
 
-    public static List<Order> getByUser(User user){
+    public static List<Order> getByUser(User user) throws UserNotFoundException {
         return (FakeDB.getInstance().getUsers().stream()
                 .filter(u -> u.getName().equals(user.getName()) &&
                             u.getPassword().equals(user.getPassword()))
                 .findAny()
-                .orElseThrow(() -> new RuntimeException("No such user..."))
+                .orElseThrow(UserNotFoundException::new)
         ).getOrders();
     }
 
-    public static Order getById(String id){
+    public static Order getById(String id) throws OrderNotFoundException {
         return FakeDB.getInstance().getOrders().stream()
                 .filter(order -> order.getId().equals(id))
                 .findAny()
-                .orElse(null);
+                .orElseThrow(OrderNotFoundException::new);
     }
 
-    public static void deleteById(String id){
+    public static void deleteById(String id) throws OrderNotFoundException {
         FakeDB.getInstance().getOrders()
                 .remove(
                     FakeDB.getInstance().getOrders().stream()
                     .filter(order -> order.getId().equals(id))
                     .findAny()
-                    .orElse(null)
+                    .orElseThrow(OrderNotFoundException::new)
         );
     }
 
     public static void create(Order order){
+        UserContext.getCurrentUser().getOrders().add(order);
         FakeDB.getInstance().getOrders().add(order);
     }
-
 }

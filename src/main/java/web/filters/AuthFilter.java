@@ -1,6 +1,7 @@
 package web.filters;
 
 import domain.User;
+import exception.UserNotFoundException;
 import service.UserService;
 import utils.UserContext;
 
@@ -22,13 +23,17 @@ public class AuthFilter implements Filter {
 
         User currentUser = new User(name, password);
 
-        if(UserService.getUser(currentUser) != null){
-            UserContext.setCurrentUser(currentUser);
+        try {
+            if(UserService.getUser(currentUser) != null){
+                UserContext.setCurrentUser(currentUser);
 
-            chain.doFilter(req, resp);
-        }
-        else{
-            ((HttpServletResponse) resp).sendError(HttpServletResponse.SC_BAD_REQUEST, "lol no");
+                chain.doFilter(req, resp);
+            }
+            else{
+                ((HttpServletResponse) resp).sendError(HttpServletResponse.SC_BAD_REQUEST, "lol no");
+            }
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
