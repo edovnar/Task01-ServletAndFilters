@@ -32,7 +32,6 @@ public class AuthFilter implements Filter {
 
                 if(basic.equalsIgnoreCase("Basic")){
                     try{
-                        //base64Decode(st.nextToken());
                         String userInfo = new String(Base64.getDecoder().decode(st.nextToken()));
                         int p = userInfo.indexOf(":");
                         if(p != -1){
@@ -40,8 +39,7 @@ public class AuthFilter implements Filter {
                             String password = userInfo.substring(p + 1).trim();
 
                             User currentUser = new User(name, password);
-                            UserService.getUser(currentUser);
-                            UserContext.setCurrentUser(currentUser);
+                            UserContext.setCurrentUser(UserService.getUser(currentUser));
                             chain.doFilter(request, response);
                         }
                     } catch (UserNotFoundException e) {

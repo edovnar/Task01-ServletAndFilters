@@ -10,7 +10,18 @@ public class Order {
     private String item;
     private Integer quantity;
 
-//todo generate on server
+    public Order(String id, Date submittedAt, Date updatedAt, String submittedBy, String item, Integer quantity) {
+        this.id = id;
+        this.submittedAt = submittedAt;
+        this.updatedAt = updatedAt;
+        this.submittedBy = submittedBy;
+        this.item = item;
+        this.quantity = quantity;
+    }
+
+    public Order() {
+    }
+
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 

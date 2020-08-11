@@ -40,7 +40,14 @@ public class OrderDAO{
         );
     }
 
+    /**
+     * Set field subbmitedBy(Order) with the Name of current User
+     * add such Order to the list of Orders, which current User has,
+     * then add Order to the FakeDB.
+     * @param order
+     */
     public static void create(Order order){
+        order.setSubmittedBy(UserContext.getCurrentUser().getName());
         UserContext.getCurrentUser().getOrders().add(order);
         FakeDB.getInstance().getOrders().add(order);
     }

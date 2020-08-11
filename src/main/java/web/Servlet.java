@@ -12,7 +12,7 @@ import java.io.IOException;
 
 @WebServlet("/*")
 public class Servlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Command command = new PostCommand(response, request);
         try {
             command.execute();

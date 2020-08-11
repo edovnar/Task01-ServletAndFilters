@@ -19,10 +19,10 @@ public class GetCommand extends Command{
         String[] path = req.getPathInfo().split("/");
         try {
             if(req.getPathInfo().equals("/orders")){
-                    resp.getWriter().write(OrderService.getOrdersByCurrentUser().toString());
+                    resp.getWriter().write(OrderService.getOrdersFromCurrentUser().toString());
             }
-            else if(req.getPathInfo().equals("/orders/" + path[3])){
-                String id = req.getPathInfo().split("/")[3];
+            else if(req.getPathInfo().equals("/orders/" + path[2])){
+                String id = req.getPathInfo().split("/")[2];
                 resp.getWriter().write(OrderService.getOrderByIdFromCurrentUser(id).toString());
             }
             else
