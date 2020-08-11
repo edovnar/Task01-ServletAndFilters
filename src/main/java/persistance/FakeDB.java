@@ -4,14 +4,13 @@ import domain.Order;
 import domain.User;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class FakeDB {
 
     private static FakeDB instance;
 
-    private List<User> users = Arrays.asList(
+    private List<User> users = List.of(
             new User("admin", "admin"),
             new User("vice-admin","admin"));
 

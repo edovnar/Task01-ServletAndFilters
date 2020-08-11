@@ -8,16 +8,16 @@ import persistance.FakeDB;
 import utils.UserContext;
 
 import java.util.List;
+import java.util.Set;
 
 public class OrderDAO{
     public static List<Order> getAll(){
         return FakeDB.getInstance().getOrders();
     }
 
-    public static List<Order> getByUser(User user) throws UserNotFoundException {
+    public static Set<Order> getByUserName(String userName) throws UserNotFoundException {
         return (FakeDB.getInstance().getUsers().stream()
-                .filter(u -> u.getName().equals(user.getName()) &&
-                            u.getPassword().equals(user.getPassword()))
+                .filter(u -> u.getName().equals(userName))
                 .findAny()
                 .orElseThrow(UserNotFoundException::new)
         ).getOrders();

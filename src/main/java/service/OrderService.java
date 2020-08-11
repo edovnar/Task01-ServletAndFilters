@@ -7,13 +7,13 @@ import exception.UserNotFoundException;
 import persistance.dao.OrderDAO;
 import utils.UserContext;
 
-import java.util.List;
+import java.util.Set;
 
 
 public class OrderService {
 
-    public static List<Order> getOrdersFromCurrentUser() throws UserNotFoundException {
-        return OrderDAO.getByUser(UserContext.getCurrentUser());
+    public static Set<Order> getOrdersFromCurrentUser() throws UserNotFoundException {
+        return OrderDAO.getByUserName(UserContext.getCurrentUser().getName());
     }
 
     public static Order getOrderById(String id) throws OrderNotFoundException {
@@ -46,7 +46,7 @@ public class OrderService {
      * @throws UserNotFoundException
      */
     public static void postOrder(Order order) throws UserNotFoundException {
-        Order oldOrder = OrderDAO.getByUser(UserContext.getCurrentUser()).stream()
+        Order oldOrder = OrderDAO.getByUserName(UserContext.getCurrentUser().getName()).stream()
                 .filter(oldO -> oldO.getItem().equals(order.getItem()))
                 .findAny()
                 .orElse(null);

@@ -1,20 +1,20 @@
 package domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class User {
 
     private String name;
     private String password;
-    private List<Order> orders;
+    private Set<Order> orders;
 
     public User() { }
 
     public User(String name, String password) {
         this.name = name;
         this.password = password;
-        orders  = new ArrayList<>();
+        orders  = new HashSet<>();
     }
 
     public String getName() {
@@ -31,7 +31,7 @@ public class User {
         this.password = password;
     }
 
-    public List<Order> getOrders() { return orders; }
-    public void setOrders(List<Order> orders) { this.orders = orders; }
+    public Set<Order> getOrders() { return orders; }
+    public void setOrders(Set<Order> orders) { this.orders = orders; }
 
 }

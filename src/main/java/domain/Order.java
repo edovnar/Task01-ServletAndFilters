@@ -1,16 +1,17 @@
 package domain;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Order {
     private String id;
-    private Date submittedAt;
-    private Date updatedAt;
+    private LocalDateTime submittedAt;
+    private LocalDateTime updatedAt;
     private String submittedBy;
     private String item;
     private Integer quantity;
 
-    public Order(String id, Date submittedAt, Date updatedAt, String submittedBy, String item, Integer quantity) {
+    public Order(String id, LocalDateTime submittedAt, LocalDateTime updatedAt,
+                 String submittedBy, String item, Integer quantity) {
         this.id = id;
         this.submittedAt = submittedAt;
         this.updatedAt = updatedAt;
@@ -25,11 +26,11 @@ public class Order {
     public String getId() { return id; }
     public void setId(String id) { this.id = id; }
 
-    public Date getSubmittedAt() { return submittedAt; }
-    public void setSubmittedAt(Date submittedAt) { this.submittedAt = submittedAt; }
+    public LocalDateTime getSubmittedAt() { return submittedAt; }
+    public void setSubmittedAt(LocalDateTime submittedAt) { this.submittedAt = submittedAt; }
 
-    public Date getUpdatedAt() { return updatedAt; }
-    public void setUpdatedAt(Date updatedAt) { this.updatedAt = updatedAt; }
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 
     public String getSubmittedBy() { return submittedBy; }
     public void setSubmittedBy(String submittedBy) { this.submittedBy = submittedBy; }
