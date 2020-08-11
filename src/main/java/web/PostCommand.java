@@ -11,8 +11,7 @@ import java.io.IOException;
 
 public class PostCommand extends Command {
 
-    public PostCommand(HttpServletResponse resp,
-                       HttpServletRequest req) {
+    public PostCommand(HttpServletResponse resp, HttpServletRequest req) {
         super(resp, req);
     }
 
@@ -21,14 +20,11 @@ public class PostCommand extends Command {
         if (req.getPathInfo().equals("/orders")){
             try {
                 Order order = new ObjectMapper().readValue(req.getReader(), Order.class);
-
                 OrderService.postOrder(order);
                 resp.getWriter().write("Order is accepted");
             } catch (IOException | UserNotFoundException e) {
                 e.printStackTrace();
             }
         }
-
     }
-
 }

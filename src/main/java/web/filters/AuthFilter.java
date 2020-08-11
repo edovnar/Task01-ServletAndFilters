@@ -11,29 +11,44 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Base64;
+import java.util.StringTokenizer;
+
 @WebFilter(filterName = "AuthFilter", urlPatterns = "/*")
 public class AuthFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException { }
 
     @Override
-    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
-        String name = ((HttpServletRequest) req).getHeader("name");
-        String password = ((HttpServletRequest) req).getHeader("password");
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        HttpServletRequest req = (HttpServletRequest) request;
+        String authHeader = req.getHeader("Authorization");
 
-        User currentUser = new User(name, password);
+        if(authHeader != null){
+            StringTokenizer st = new StringTokenizer(authHeader);
 
-        try {
-            if(UserService.getUser(currentUser) != null){
-                UserContext.setCurrentUser(currentUser);
+            if(st.hasMoreTokens()){
+                String basic = st.nextToken();
 
-                chain.doFilter(req, resp);
+                if(basic.equalsIgnoreCase("Basic")){
+                    try{
+                        //base64Decode(st.nextToken());
+                        String userInfo = new String(Base64.getDecoder().decode(st.nextToken()));
+                        int p = userInfo.indexOf(":");
+                        if(p != -1){
+                            String name = userInfo.substring(0, p).trim();
+                            String password = userInfo.substring(p + 1).trim();
+
+                            User currentUser = new User(name, password);
+                            UserService.getUser(currentUser);
+                            UserContext.setCurrentUser(currentUser);
+                            chain.doFilter(request, response);
+                        }
+                    } catch (UserNotFoundException e) {
+                        ((HttpServletResponse) response).sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                    }
+                }
             }
-            else{
-                ((HttpServletResponse) resp).sendError(HttpServletResponse.SC_BAD_REQUEST, "lol no");
-            }
-        } catch (UserNotFoundException e) {
-            e.printStackTrace();
         }
     }
 

@@ -1,7 +1,11 @@
 package web;
 
+import exception.OrderNotFoundException;
+import exception.UserNotFoundException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 public abstract class Command {
 
@@ -14,5 +18,5 @@ public abstract class Command {
         this.req = req;
     }
 
-    public abstract void execute();
+    public abstract void execute() throws IOException, UserNotFoundException, OrderNotFoundException;
 }
