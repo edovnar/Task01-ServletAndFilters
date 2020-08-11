@@ -10,7 +10,6 @@ import utils.UserContext;
 import java.util.List;
 
 public class OrderDAO{
-//todo exceptions null
     public static List<Order> getAll(){
         return FakeDB.getInstance().getOrders();
     }

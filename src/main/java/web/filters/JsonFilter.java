@@ -5,7 +5,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(filterName = "JsonFilter", urlPatterns = "/ff")
+@WebFilter(filterName = "JsonFilter", urlPatterns = "/*")
 public class JsonFilter implements Filter {
     public void destroy() { }
 
