@@ -4,6 +4,7 @@ import domain.Order;
 import domain.User;
 import exception.OrderNotFoundException;
 import exception.UserNotFoundException;
+import persistance.FakeDB;
 import persistance.dao.OrderDAO;
 import utils.UserContext;
 
@@ -12,12 +13,24 @@ import java.util.Set;
 
 public class OrderService {
 
-    public static Set<Order> getOrdersFromCurrentUser() throws UserNotFoundException {
-        return OrderDAO.getByUserName(UserContext.getCurrentUser().getName());
+    private OrderDAO orderDAO;
+
+    private OrderService() {
+        this.orderDAO = OrderDAO.getInstance();
     }
 
-    public static Order getOrderById(String id) throws OrderNotFoundException {
-        return OrderDAO.getById(id);
+    private static class Singleton{
+        public static final OrderService INSTANCE = new OrderService();
+    }
+
+    public static OrderService getInstance(){ return OrderService.Singleton.INSTANCE; }
+
+    public Set<Order> getOrdersFromCurrentUser() throws UserNotFoundException {
+        return orderDAO.getByUserName(UserContext.getCurrentUser().getName());
+    }
+
+    public Order getOrderById(String id) throws OrderNotFoundException {
+        return orderDAO.getById(id);
     }
 
     /**
@@ -29,8 +42,8 @@ public class OrderService {
      * @return Order (required if OK, empty - is not OK)
      * @throws OrderNotFoundException
      */
-    public static Order getOrderByIdFromCurrentUser(String id) throws OrderNotFoundException {
-        Order order = OrderDAO.getById(id);
+    public Order getOrderByIdFromCurrentUser(String id) throws OrderNotFoundException {
+        Order order = orderDAO.getById(id);
         User user = UserContext.getCurrentUser();
             if(order.getSubmittedBy().equals(user.getName()))
                 return order;
@@ -45,8 +58,8 @@ public class OrderService {
      * @param order
      * @throws UserNotFoundException
      */
-    public static void postOrder(Order order) throws UserNotFoundException {
-        Order oldOrder = OrderDAO.getByUserName(UserContext.getCurrentUser().getName()).stream()
+    public void postOrder(Order order) throws UserNotFoundException {
+        Order oldOrder = orderDAO.getByUserName(UserContext.getCurrentUser().getName()).stream()
                 .filter(oldO -> oldO.getItem().equals(order.getItem()))
                 .findAny()
                 .orElse(null);
@@ -54,7 +67,7 @@ public class OrderService {
         if(oldOrder != null) {
             oldOrder.setQuantity(oldOrder.getQuantity() + order.getQuantity());
         } else{
-            OrderDAO.create(order);
+            orderDAO.create(order);
         }
     }
 }

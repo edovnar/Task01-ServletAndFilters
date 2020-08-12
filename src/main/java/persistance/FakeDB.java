@@ -2,13 +2,12 @@ package persistance;
 
 import domain.Order;
 import domain.User;
+import persistance.dao.UserDAO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FakeDB {
-
-    private static FakeDB instance;
 
     private List<User> users = List.of(
             new User("admin", "admin"),
@@ -16,14 +15,13 @@ public class FakeDB {
 
     private List<Order> orders = new ArrayList<>();
 
-    private FakeDB(){}
+    private FakeDB() { }
 
-    public static synchronized FakeDB getInstance(){
-        if(instance == null) {
-            instance = new FakeDB();
+        private static class Singleton{
+            public static final FakeDB INSTANCE = new FakeDB();
         }
-        return instance;
-    }
+
+    public static FakeDB getInstance(){ return FakeDB.Singleton.INSTANCE; }
 
     public List<User> getUsers() {
         return users;

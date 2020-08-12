@@ -8,11 +8,19 @@ import java.util.List;
 
 public class UserDAO {
 
-    public static List<User> getUsers(){
+    private UserDAO() { }
+
+        private static class Singleton{
+            public static final UserDAO INSTANCE = new UserDAO();
+        }
+
+    public static UserDAO getInstance(){ return UserDAO.Singleton.INSTANCE; }
+
+    public List<User> getUsers(){
         return FakeDB.getInstance().getUsers();
     }
 
-    public static User getUser(User user) throws UserNotFoundException {
+    public User getUser(User user) throws UserNotFoundException {
         return FakeDB.getInstance().getUsers().stream()
                 .filter(u -> u.getName().equals(user.getName()) &&
                         u.getPassword().equals((user.getPassword())))

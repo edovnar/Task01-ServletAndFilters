@@ -1,4 +1,4 @@
-package web.filters;
+package web.filter;
 
 import domain.User;
 import exception.UserNotFoundException;
@@ -38,8 +38,10 @@ public class AuthFilter implements Filter {
                             String name = userInfo.substring(0, p).trim();
                             String password = userInfo.substring(p + 1).trim();
 
+                            UserService userService = UserService.getInstance();
+
                             User currentUser = new User(name, password);
-                            UserContext.setCurrentUser(UserService.getUser(currentUser));
+                            UserContext.setCurrentUser(userService.getUser(currentUser));
                             chain.doFilter(request, response);
                         }
                     } catch (UserNotFoundException e) {

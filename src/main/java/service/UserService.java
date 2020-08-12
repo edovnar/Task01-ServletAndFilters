@@ -8,11 +8,23 @@ import java.util.List;
 
 public class UserService {
 
-    public static List<User> getAllUsers(){
-        return UserDAO.getUsers();
+    private UserDAO userDAO;
+
+    private UserService(){
+        this.userDAO = UserDAO.getInstance();
     }
 
-    public static User getUser(User user) throws UserNotFoundException {
-        return UserDAO.getUser(user);
+        private static class Singleton{
+            private  static final UserService INSTANCE = new UserService();
+        }
+
+    public static UserService getInstance(){ return Singleton.INSTANCE;}
+
+    public List<User> getAllUsers(){
+        return userDAO.getUsers();
+    }
+
+    public User getUser(User user) throws UserNotFoundException {
+        return userDAO.getUser(user);
     }
 }
