@@ -1,12 +1,10 @@
 package persistance.dao;
 
 import domain.Order;
-import exception.OrderNotFoundException;
-import exception.UserNotFoundException;
 import persistance.FakeDB;
 import utils.UserContext;
 
-import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public class OrderDAO{
@@ -19,33 +17,19 @@ public class OrderDAO{
 
     public static OrderDAO getInstance(){ return Singleton.INSTANCE; }
 
-    public List<Order> getAll(){
-        return FakeDB.getInstance().getOrders();
-    }
 
-    public Set<Order> getByUserName(String userName) throws UserNotFoundException {
-        return (FakeDB.getInstance().getUsers().stream()
+    public Optional<Set<Order>> getByUserName(String userName){
+        return Optional.of(FakeDB.getInstance().getUsers().stream()
                 .filter(u -> u.getName().equals(userName))
                 .findAny()
-                .orElseThrow(UserNotFoundException::new)
-        ).getOrders();
+                .get()
+                .getOrders());
     }
 
-    public Order getById(String id) throws OrderNotFoundException {
+    public Optional<Order> getById(String id){
         return FakeDB.getInstance().getOrders().stream()
                 .filter(order -> order.getId().equals(id))
-                .findAny()
-                .orElseThrow(OrderNotFoundException::new);
-    }
-
-    public void deleteById(String id) throws OrderNotFoundException {
-        FakeDB.getInstance().getOrders()
-                .remove(
-                    FakeDB.getInstance().getOrders().stream()
-                    .filter(order -> order.getId().equals(id))
-                    .findAny()
-                    .orElseThrow(OrderNotFoundException::new)
-        );
+                .findAny();
     }
 
     /**

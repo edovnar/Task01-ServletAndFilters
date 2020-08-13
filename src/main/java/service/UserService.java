@@ -21,10 +21,11 @@ public class UserService {
     public static UserService getInstance(){ return Singleton.INSTANCE;}
 
     public List<User> getAllUsers(){
-        return userDAO.getUsers();
+        return userDAO.getAll();
     }
 
-    public User getUser(User user) throws UserNotFoundException {
-        return userDAO.getUser(user);
+    public User getUser(String name) throws UserNotFoundException {
+        return userDAO.getByName(name)
+                .orElseThrow(UserNotFoundException::new);
     }
 }

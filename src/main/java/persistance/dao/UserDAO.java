@@ -5,6 +5,7 @@ import exception.UserNotFoundException;
 import persistance.FakeDB;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UserDAO {
 
@@ -16,15 +17,14 @@ public class UserDAO {
 
     public static UserDAO getInstance(){ return UserDAO.Singleton.INSTANCE; }
 
-    public List<User> getUsers(){
+
+    public List<User> getAll(){
         return FakeDB.getInstance().getUsers();
     }
 
-    public User getUser(User user) throws UserNotFoundException {
+    public Optional<User> getByName(String name) {
         return FakeDB.getInstance().getUsers().stream()
-                .filter(u -> u.getName().equals(user.getName()) &&
-                        u.getPassword().equals((user.getPassword())))
-                .findAny()
-                .orElseThrow(UserNotFoundException::new);
+                .filter(u -> u.getName().equals(name))
+                .findAny();
     }
 }

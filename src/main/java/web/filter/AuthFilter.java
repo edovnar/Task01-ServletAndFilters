@@ -40,9 +40,10 @@ public class AuthFilter implements Filter {
 
                             UserService userService = UserService.getInstance();
 
-                            User currentUser = new User(name, password);
-                            UserContext.setCurrentUser(userService.getUser(currentUser));
-                            chain.doFilter(request, response);
+                            if (userService.getUser(name).getPassword().equals(password)){
+                                UserContext.setCurrentUser(userService.getUser(name));
+                                chain.doFilter(request, response);
+                            }
                         }
                     } catch (UserNotFoundException e) {
                         ((HttpServletResponse) response).sendError(HttpServletResponse.SC_UNAUTHORIZED);

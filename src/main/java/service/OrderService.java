@@ -4,7 +4,6 @@ import domain.Order;
 import domain.User;
 import exception.OrderNotFoundException;
 import exception.UserNotFoundException;
-import persistance.FakeDB;
 import persistance.dao.OrderDAO;
 import utils.UserContext;
 
@@ -25,12 +24,10 @@ public class OrderService {
 
     public static OrderService getInstance(){ return OrderService.Singleton.INSTANCE; }
 
-    public Set<Order> getOrdersFromCurrentUser() throws UserNotFoundException {
-        return orderDAO.getByUserName(UserContext.getCurrentUser().getName());
-    }
 
-    public Order getOrderById(String id) throws OrderNotFoundException {
-        return orderDAO.getById(id);
+    public Set<Order> getOrdersFromCurrentUser() throws OrderNotFoundException {
+        return orderDAO.getByUserName(UserContext.getCurrentUser().getName())
+                .orElseThrow(OrderNotFoundException::new);
     }
 
     /**
@@ -38,16 +35,21 @@ public class OrderService {
      * If there is no such order throws OrderNotFoundException.
      * Check if the order was submitted by Current user,
      * if it was - return order, else return empty Order(?).
-     * @param id
+     * @param id - id of order that want to be found
      * @return Order (required if OK, empty - is not OK)
      * @throws OrderNotFoundException
      */
+
     public Order getOrderByIdFromCurrentUser(String id) throws OrderNotFoundException {
-        Order order = orderDAO.getById(id);
+        Order order = orderDAO.getById(id)
+                .orElseThrow(OrderNotFoundException::new);
         User user = UserContext.getCurrentUser();
-            if(order.getSubmittedBy().equals(user.getName()))
+
+            if(order.getSubmittedBy().equals(user.getName())){
                 return order;
-        return new Order();
+            } else {
+                throw new OrderNotFoundException();
+            }
     }
 
     /**
@@ -58,8 +60,10 @@ public class OrderService {
      * @param order
      * @throws UserNotFoundException
      */
-    public void postOrder(Order order) throws UserNotFoundException {
-        Order oldOrder = orderDAO.getByUserName(UserContext.getCurrentUser().getName()).stream()
+    public void postOrder(Order order) throws OrderNotFoundException {
+        Order oldOrder = orderDAO.getByUserName(UserContext.getCurrentUser().getName())
+                .orElseThrow(OrderNotFoundException::new)
+                .stream()
                 .filter(oldO -> oldO.getItem().equals(order.getItem()))
                 .findAny()
                 .orElse(null);
