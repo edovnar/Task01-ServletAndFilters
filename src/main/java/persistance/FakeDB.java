@@ -17,9 +17,9 @@ public class FakeDB {
 
     private FakeDB() { }
 
-        private static class Singleton{
-            public static final FakeDB INSTANCE = new FakeDB();
-        }
+    private static class Singleton{
+        public static final FakeDB INSTANCE = new FakeDB();
+    }
 
     public static FakeDB getInstance(){ return FakeDB.Singleton.INSTANCE; }
 

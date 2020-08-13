@@ -16,20 +16,16 @@ public class Servlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             CommandDistributor.getInstance().getCommand(req.getPathInfo(), req.getMethod()).execute(req, resp);
-        } catch (UserNotFoundException e) {
-            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
         } catch (OrderNotFoundException | CommandNotFoundException e) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             CommandDistributor.getInstance().getCommand(req.getPathInfo(), req.getMethod()).execute(req, resp);
-        } catch (UserNotFoundException e) {
-            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
         } catch (OrderNotFoundException | CommandNotFoundException e) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 }

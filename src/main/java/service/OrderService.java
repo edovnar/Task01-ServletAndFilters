@@ -45,11 +45,11 @@ public class OrderService {
                 .orElseThrow(OrderNotFoundException::new);
         User user = UserContext.getCurrentUser();
 
-            if(order.getSubmittedBy().equals(user.getName())){
-                return order;
-            } else {
-                throw new OrderNotFoundException();
-            }
+        if(order.getSubmittedBy().equals(user.getName())){
+            return order;
+        } else {
+            throw new OrderNotFoundException();
+        }
     }
 
     /**
@@ -61,15 +61,15 @@ public class OrderService {
      * @throws UserNotFoundException
      */
     public void postOrder(Order order){
-        Order oldOrder = orderDAO.getByUserName(UserContext.getCurrentUser().getName())
+        Order postedOrder = orderDAO.getByUserName(UserContext.getCurrentUser().getName())
                 .orElse(null)
                 .stream()
-                .filter(oldO -> oldO.getItem().equals(order.getItem()))
+                .filter(postOrder -> postOrder.getItem().equals(order.getItem()))
                 .findAny()
                 .orElse(null);
 
-        if(oldOrder != null) {
-            oldOrder.setQuantity(oldOrder.getQuantity() + order.getQuantity());
+        if(postedOrder != null) {
+            postedOrder.setQuantity(postedOrder.getQuantity() + order.getQuantity());
         } else{
             orderDAO.create(order);
         }

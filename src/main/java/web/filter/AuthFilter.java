@@ -29,20 +29,19 @@ public class AuthFilter implements Filter {
             if(st.hasMoreTokens()){
                 String basic = st.nextToken();
 
-                if(basic.equalsIgnoreCase("Basic")){
+                if(basic.equals("Basic")){
                     try{
-                        String userInfo = new String(Base64.getDecoder().decode(st.nextToken()));
-                        int p = userInfo.indexOf(":");
-                        if(p != -1){
-                            String name = userInfo.substring(0, p).trim();
-                            String password = userInfo.substring(p + 1).trim();
+                        String decodeInfo = new String(Base64.getDecoder().decode(st.nextToken()));
+                        String[] userInfo = decodeInfo.split(":");
 
-                            UserService userService = UserService.getInstance();
+                        String name = userInfo[0];
+                        String password = userInfo[1];
 
-                            if (userService.getUser(name).getPassword().equals(password)){
-                                UserContext.setCurrentUser(userService.getUser(name));
-                                chain.doFilter(request, response);
-                            }
+                        UserService userService = UserService.getInstance();
+
+                        if (userService.getUser(name).getPassword().equals(password)){
+                            UserContext.setCurrentUser(userService.getUser(name));
+                            chain.doFilter(request, response);
                         }
                     } catch (UserNotFoundException e) {
                         ((HttpServletResponse) response).sendError(HttpServletResponse.SC_UNAUTHORIZED);

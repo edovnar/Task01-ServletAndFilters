@@ -3,13 +3,13 @@ package utils;
 import domain.User;
 
 public class UserContext {
-    private static final ThreadLocal<User> thUser = new ThreadLocal<>();
+    private static final ThreadLocal<User> inheritableThreadLocal = new ThreadLocal<>();
 
     public static User getCurrentUser() {
-        return thUser.get();
+        return inheritableThreadLocal.get();
     }
 
     public static void setCurrentUser(User user){
-        thUser.set(user);
+        inheritableThreadLocal.set(user);
     }
 }

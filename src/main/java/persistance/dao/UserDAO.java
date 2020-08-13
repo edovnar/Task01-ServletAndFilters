@@ -24,7 +24,7 @@ public class UserDAO {
 
     public Optional<User> getByName(String name) {
         return FakeDB.getInstance().getUsers().stream()
-                .filter(u -> u.getName().equals(name))
+                .filter(user -> user.getName().equals(name))
                 .findAny();
     }
 }

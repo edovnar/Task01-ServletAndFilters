@@ -24,8 +24,9 @@ public class PostOrderCommand implements Command {
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         OrderService orderService = OrderService.getInstance();
-                Order order = new ObjectMapper().readValue(req.getReader(), Order.class);
-                orderService.postOrder(order);
-                resp.getWriter().write("Order is accepted");
+        Order order = new ObjectMapper().readValue(req.getReader(), Order.class);
+
+        orderService.postOrder(order);
+        resp.getWriter().write("Order is accepted");
     }
 }

@@ -14,7 +14,7 @@ public class User {
     public User(String name, String password) {
         this.name = name;
         this.password = password;
-        orders  = new HashSet<>();
+        orders = new HashSet<>();
     }
 
     public String getName() {
