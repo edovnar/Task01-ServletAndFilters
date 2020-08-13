@@ -4,6 +4,9 @@ import exception.CommandNotFoundException;
 import exception.OrderNotFoundException;
 import web.command_pattern.CommandDistributor;
 
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,19 +15,15 @@ import java.io.IOException;
 
 @WebServlet("/*")
 public class Servlet extends HttpServlet {
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        try {
-            CommandDistributor.getInstance().getCommand(req.getPathInfo(), req.getMethod()).execute(req, resp);
-        } catch (OrderNotFoundException | CommandNotFoundException e) {
-            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
-        }
-    }
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    @Override
+    public void service(ServletRequest req, ServletResponse res) throws IOException {
+        HttpServletRequest request = (HttpServletRequest) req;
+        HttpServletResponse response = (HttpServletResponse) res;
         try {
-            CommandDistributor.getInstance().getCommand(req.getPathInfo(), req.getMethod()).execute(req, resp);
+            CommandDistributor.getInstance().getCommand(request.getPathInfo(), request.getMethod()).execute(request, response);
         } catch (OrderNotFoundException | CommandNotFoundException e) {
-            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 }

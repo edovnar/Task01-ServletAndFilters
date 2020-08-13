@@ -19,8 +19,8 @@ public class CommandDistributor {
 
     public Command getCommand(String uri, String method) {
 
-        if (uri.split("/").length == 3){
-            uri = "/order/{id}";
+        if (uri.split("/").length == 3 && uri.split("/")[1].equals("orders")){
+            uri = "/orders/{id}";
         }
 
         if (method.equals("POST")) {
@@ -31,7 +31,7 @@ public class CommandDistributor {
         } else if (method.equals("GET")) {
             return switch (uri) {
                 case "/orders" -> GetOrderCommand.getInstance();
-                case "/order/{id}" -> GetOrderByIDCommand.getInstance();
+                case "/orders/{id}" -> GetOrderByIDCommand.getInstance();
                 default -> throw new CommandNotFoundException();
             };
         } else {
