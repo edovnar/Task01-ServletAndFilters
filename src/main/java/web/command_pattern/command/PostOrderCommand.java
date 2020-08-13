@@ -2,7 +2,6 @@ package web.command_pattern.command;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import domain.Order;
-import exception.UserNotFoundException;
 import service.OrderService;
 import web.command_pattern.Command;
 
@@ -23,14 +22,10 @@ public class PostOrderCommand implements Command {
     }
 
     @Override
-    public void execute(HttpServletRequest req, HttpServletResponse resp) {
+    public void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         OrderService orderService = OrderService.getInstance();
-            try {
                 Order order = new ObjectMapper().readValue(req.getReader(), Order.class);
                 orderService.postOrder(order);
                 resp.getWriter().write("Order is accepted");
-            } catch (IOException | UserNotFoundException e) {
-                e.printStackTrace();
-            }
     }
 }

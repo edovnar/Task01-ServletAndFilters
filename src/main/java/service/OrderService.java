@@ -25,7 +25,7 @@ public class OrderService {
     public static OrderService getInstance(){ return OrderService.Singleton.INSTANCE; }
 
 
-    public Set<Order> getOrdersFromCurrentUser() throws OrderNotFoundException {
+    public Set<Order> getOrdersFromCurrentUser() {
         return orderDAO.getByUserName(UserContext.getCurrentUser().getName())
                 .orElseThrow(OrderNotFoundException::new);
     }
@@ -40,7 +40,7 @@ public class OrderService {
      * @throws OrderNotFoundException
      */
 
-    public Order getOrderByIdFromCurrentUser(String id) throws OrderNotFoundException {
+    public Order getOrderByIdFromCurrentUser(String id){
         Order order = orderDAO.getById(id)
                 .orElseThrow(OrderNotFoundException::new);
         User user = UserContext.getCurrentUser();
@@ -60,9 +60,9 @@ public class OrderService {
      * @param order
      * @throws UserNotFoundException
      */
-    public void postOrder(Order order) throws OrderNotFoundException {
+    public void postOrder(Order order){
         Order oldOrder = orderDAO.getByUserName(UserContext.getCurrentUser().getName())
-                .orElseThrow(OrderNotFoundException::new)
+                .orElse(null)
                 .stream()
                 .filter(oldO -> oldO.getItem().equals(order.getItem()))
                 .findAny()

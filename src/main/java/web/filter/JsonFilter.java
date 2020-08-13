@@ -18,8 +18,7 @@ public class JsonFilter implements Filter {
         }
     }
 
-    public void init(FilterConfig config) throws ServletException {
-
+    public void init(FilterConfig config){
     }
 
 }

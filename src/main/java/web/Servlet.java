@@ -1,5 +1,6 @@
 package web;
 
+import exception.CommandNotFoundException;
 import exception.OrderNotFoundException;
 import exception.UserNotFoundException;
 import web.command_pattern.CommandDistributor;
@@ -17,7 +18,7 @@ public class Servlet extends HttpServlet {
             CommandDistributor.getInstance().getCommand(req.getPathInfo(), req.getMethod()).execute(req, resp);
         } catch (UserNotFoundException e) {
             resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-        } catch (OrderNotFoundException e) {
+        } catch (OrderNotFoundException | CommandNotFoundException e) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
     }
@@ -27,7 +28,7 @@ public class Servlet extends HttpServlet {
             CommandDistributor.getInstance().getCommand(req.getPathInfo(), req.getMethod()).execute(req, resp);
         } catch (UserNotFoundException e) {
             resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-        } catch (OrderNotFoundException e) {
+        } catch (OrderNotFoundException | CommandNotFoundException e) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
         }
     }

@@ -1,6 +1,6 @@
 package web.command_pattern;
 
-import exception.OrderNotFoundException;
+import exception.CommandNotFoundException;
 import web.command_pattern.command.GetOrderByIDCommand;
 import web.command_pattern.command.GetOrderCommand;
 import web.command_pattern.command.PostOrderCommand;
@@ -17,22 +17,26 @@ public class CommandDistributor {
         return Singleton.INSTANCE;
     }
 
-    public Command getCommand(String uri, String method) throws OrderNotFoundException {
+    public Command getCommand(String uri, String method) {
 
         if (uri.split("/").length == 3){
             uri = "/order/{id}";
         }
 
         if (method.equals("POST")) {
-            switch (uri) {
-                case "/orders": return PostOrderCommand.getInstance();
+            if ("/orders".equals(uri)) {
+                return PostOrderCommand.getInstance();
             }
+            throw new CommandNotFoundException();
         } else if (method.equals("GET")) {
-            switch (uri) {
-                case "/orders": return GetOrderCommand.getInstance();
-                case "/order/{id}": return GetOrderByIDCommand.getInstance();
-            }
-        } else throw new OrderNotFoundException();
-        return null;
+            return switch (uri) {
+                case "/orders" -> GetOrderCommand.getInstance();
+                case "/order/{id}" -> GetOrderByIDCommand.getInstance();
+                default -> throw new CommandNotFoundException();
+            };
+        } else {
+             throw  new CommandNotFoundException();
+        }
+
     }
 }

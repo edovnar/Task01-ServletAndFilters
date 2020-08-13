@@ -24,7 +24,7 @@ public class UserService {
         return userDAO.getAll();
     }
 
-    public User getUser(String name) throws UserNotFoundException {
+    public User getUser(String name){
         return userDAO.getByName(name)
                 .orElseThrow(UserNotFoundException::new);
     }

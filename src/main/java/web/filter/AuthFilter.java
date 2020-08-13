@@ -1,6 +1,5 @@
 package web.filter;
 
-import domain.User;
 import exception.UserNotFoundException;
 import service.UserService;
 import utils.UserContext;
@@ -17,7 +16,7 @@ import java.util.StringTokenizer;
 @WebFilter(filterName = "AuthFilter", urlPatterns = "/*")
 public class AuthFilter implements Filter {
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException { }
+    public void init(FilterConfig filterConfig){ }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
