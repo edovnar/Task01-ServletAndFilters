@@ -26,8 +26,7 @@ public class OrderService {
 
 
     public Set<Order> getOrdersFromCurrentUser() {
-        return orderDAO.getByUserName(UserContext.getCurrentUser().getName())
-                .orElseThrow(OrderNotFoundException::new);
+        return orderDAO.getByUserName(UserContext.getCurrentUser().getName());
     }
 
     /**
@@ -62,7 +61,6 @@ public class OrderService {
      */
     public void postOrder(Order order){
         Order postedOrder = orderDAO.getByUserName(UserContext.getCurrentUser().getName())
-                .orElse(null)
                 .stream()
                 .filter(postOrder -> postOrder.getItem().equals(order.getItem()))
                 .findAny()

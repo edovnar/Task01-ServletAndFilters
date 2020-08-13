@@ -1,7 +1,6 @@
 package persistance.dao;
 
 import domain.User;
-import exception.UserNotFoundException;
 import persistance.FakeDB;
 
 import java.util.List;

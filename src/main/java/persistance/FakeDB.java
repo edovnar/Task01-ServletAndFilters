@@ -2,7 +2,6 @@ package persistance;
 
 import domain.Order;
 import domain.User;
-import persistance.dao.UserDAO;
 
 import java.util.ArrayList;
 import java.util.List;

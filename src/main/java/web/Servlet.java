@@ -2,7 +2,6 @@ package web;
 
 import exception.CommandNotFoundException;
 import exception.OrderNotFoundException;
-import exception.UserNotFoundException;
 import web.command_pattern.CommandDistributor;
 
 import javax.servlet.annotation.WebServlet;

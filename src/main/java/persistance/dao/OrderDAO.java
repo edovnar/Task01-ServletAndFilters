@@ -1,14 +1,12 @@
 package persistance.dao;
 
 import domain.Order;
-import domain.User;
 import persistance.FakeDB;
 import utils.UserContext;
 
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public class OrderDAO{
 
@@ -21,12 +19,10 @@ public class OrderDAO{
     public static OrderDAO getInstance(){ return Singleton.INSTANCE; }
 
 
-    public Optional<Set<Order>> getByUserName(String userName){
-        return Optional.of(FakeDB.getInstance().getUsers().stream()
-                .filter(u -> u.getName().equals(userName))
-                .map(User::getOrders)
-                .findAny()
-                .orElse(new HashSet<>()));
+    public Set<Order> getByUserName(String userName){
+        return FakeDB.getInstance().getOrders().stream()
+                .filter(order -> order.getSubmittedBy().equals(userName))
+                .collect(Collectors.toSet());
     }
 
     public Optional<Order> getById(String id){
@@ -43,7 +39,6 @@ public class OrderDAO{
      */
     public void create(Order order){
         order.setSubmittedBy(UserContext.getCurrentUser().getName());
-        UserContext.getCurrentUser().getOrders().add(order);
         FakeDB.getInstance().getOrders().add(order);
     }
 }

@@ -37,6 +37,5 @@ public class CommandDistributor {
         } else {
              throw  new CommandNotFoundException();
         }
-
     }
 }
