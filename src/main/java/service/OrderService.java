@@ -60,16 +60,13 @@ public class OrderService {
      * @throws UserNotFoundException
      */
     public void postOrder(Order order){
-        Order postedOrder = orderDAO.getByUserName(UserContext.getCurrentUser().getName())
+        orderDAO.getByUserName(UserContext.getCurrentUser().getName())
                 .stream()
-                .filter(postOrder -> postOrder.getItem().equals(order.getItem()))
+                .filter(existingOrder -> existingOrder.getItem().equals(order.getItem()))
                 .findAny()
-                .orElse(null);
-
-        if(postedOrder != null) {
-            postedOrder.setQuantity(postedOrder.getQuantity() + order.getQuantity());
-        } else{
-            orderDAO.create(order);
-        }
+                .ifPresentOrElse(
+                        existingOrder -> existingOrder.setQuantity(existingOrder.getQuantity() + order.getQuantity()),
+                        () ->  orderDAO.create(order)
+                );
     }
 }

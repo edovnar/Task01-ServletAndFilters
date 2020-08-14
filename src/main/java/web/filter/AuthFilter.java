@@ -24,28 +24,23 @@ public class AuthFilter implements Filter {
         String authHeader = req.getHeader("Authorization");
 
         if(authHeader != null){
-            StringTokenizer st = new StringTokenizer(authHeader);
+            String[] str = authHeader.split(" ");
+            if(str[0].equals("Basic")){
+                try{
+                    String decodeInfo = new String(Base64.getDecoder().decode(str[1]));
+                    String[] userInfo = decodeInfo.split(":");
 
-            if(st.hasMoreTokens()){
-                String basic = st.nextToken();
+                    String name = userInfo[0];
+                    String password = userInfo[1];
 
-                if(basic.equals("Basic")){
-                    try{
-                        String decodeInfo = new String(Base64.getDecoder().decode(st.nextToken()));
-                        String[] userInfo = decodeInfo.split(":");
+                    UserService userService = UserService.getInstance();
 
-                        String name = userInfo[0];
-                        String password = userInfo[1];
-
-                        UserService userService = UserService.getInstance();
-
-                        if (userService.getUser(name).getPassword().equals(password)){
-                            UserContext.setCurrentUser(userService.getUser(name));
-                            chain.doFilter(request, response);
-                        }
-                    } catch (UserNotFoundException e) {
-                        ((HttpServletResponse) response).sendError(HttpServletResponse.SC_UNAUTHORIZED);
+                    if (userService.getUser(name).getPassword().equals(password)){
+                        UserContext.setCurrentUser(userService.getUser(name));
+                        chain.doFilter(request, response);
                     }
+                } catch (UserNotFoundException e) {
+                    ((HttpServletResponse) response).sendError(HttpServletResponse.SC_UNAUTHORIZED);
                 }
             }
         }
