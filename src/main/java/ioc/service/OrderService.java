@@ -21,7 +21,6 @@ public class OrderService {
         this.orderDAO = orderDAO;
     }
 
-
     public Set<Order> getOrdersFromCurrentUser() {
         return orderDAO.getByUserName(UserContext.getCurrentUser().getName());
     }

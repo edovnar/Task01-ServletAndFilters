@@ -1,8 +1,8 @@
 package ioc.domain;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
-@Repository
+@Component
 public class User {
 
     private String name;

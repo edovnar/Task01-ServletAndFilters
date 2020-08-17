@@ -8,7 +8,8 @@ import java.io.IOException;
 
 @WebFilter(filterName = "JsonFilter", urlPatterns = "/*")
 public class JsonFilter implements Filter {
-    public void destroy() { }
+    public void destroy() {
+    }
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         if (((HttpServletRequest) req).getMethod().equals("GET")){
@@ -22,5 +23,4 @@ public class JsonFilter implements Filter {
 
     public void init(FilterConfig config){
     }
-
 }
