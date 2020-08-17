@@ -1,32 +1,34 @@
-package persistance.dao;
+package ioc.persistance.dao;
 
-import domain.Order;
-import persistance.FakeDB;
-import utils.UserContext;
+import ioc.domain.Order;
+import ioc.persistance.FakeDB;
+import ioc.utils.UserContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Component
 public class OrderDAO{
 
-    private OrderDAO() { }
+    FakeDB db;
 
-        private static class Singleton{
-            public static final OrderDAO INSTANCE = new OrderDAO();
-        }
-
-    public static OrderDAO getInstance(){ return Singleton.INSTANCE; }
-
+    @Autowired
+    private OrderDAO(FakeDB db) {
+        this.db = db;
+    }
 
     public Set<Order> getByUserName(String userName){
-        return FakeDB.getInstance().getOrders().stream()
+        return  db.getOrders().stream()
                 .filter(order -> order.getSubmittedBy().equals(userName))
                 .collect(Collectors.toSet());
     }
 
+
     public Optional<Order> getById(String id){
-        return FakeDB.getInstance().getOrders().stream()
+        return  db.getOrders().stream()
                 .filter(order -> order.getId().equals(id))
                 .findAny();
     }
@@ -37,8 +39,9 @@ public class OrderDAO{
      * then add Order to the FakeDB.
      * @param order
      */
+    @Autowired
     public void create(Order order){
         order.setSubmittedBy(UserContext.getCurrentUser().getName());
-        FakeDB.getInstance().getOrders().add(order);
+        db.getOrders().add(order);
     }
 }

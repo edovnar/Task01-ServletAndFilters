@@ -1,6 +1,6 @@
-package utils;
+package ioc.utils;
 
-import domain.User;
+import ioc.domain.User;
 
 public class UserContext {
     private static final InheritableThreadLocal<User> THREAD_LOCAL = new InheritableThreadLocal<>();
