@@ -5,15 +5,9 @@ plugins {
 }
 
 group 'org.example'
-version '1.0-SNAPSHOT'
-
 repositories {
     mavenCentral()
     jcenter()
-}
-
-configurations {
-    scm
 }
 
 sourceCompatibility = 14

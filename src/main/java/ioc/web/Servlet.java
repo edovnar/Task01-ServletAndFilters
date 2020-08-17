@@ -2,9 +2,8 @@ package ioc.web;
 
 import ioc.exception.CommandNotFoundException;
 import ioc.exception.OrderNotFoundException;
+import ioc.utils.AppContext;
 import ioc.web.command_pattern.CommandDistributor;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -22,9 +21,8 @@ public class Servlet extends HttpServlet {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
 
-        ApplicationContext context = new AnnotationConfigApplicationContext("ioc");
         try {
-            context.getBean(CommandDistributor.class)
+            AppContext.getContext().getBean(CommandDistributor.class)
                     .getCommand(request.getPathInfo(), request.getMethod())
                     .execute(request, response);
         } catch (OrderNotFoundException | CommandNotFoundException e) {

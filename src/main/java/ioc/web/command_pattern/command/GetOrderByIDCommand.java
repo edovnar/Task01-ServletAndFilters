@@ -12,10 +12,11 @@ public class GetOrderByIDCommand extends Command {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        OrderService orderService = (OrderService) context.getBean("orderService");
+
+        OrderService orderService = context.getBean(OrderService.class);
         String id = req.getPathInfo().split("/")[2];
 
         resp.setContentType("application/json");
-        resp.getWriter().write(JsonUtil.objectMapper.writeValueAsString(orderService.getOrderByIdFromCurrentUser(id)));
+        resp.getWriter().write(JsonUtil.OBJECT_MAPPER.writeValueAsString(orderService.getOrderByIdFromCurrentUser(id)));
     }
 }

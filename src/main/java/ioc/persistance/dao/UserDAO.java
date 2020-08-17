@@ -18,7 +18,7 @@ public class UserDAO {
         this.db = db;
     }
 
-    public List<User> getAll(){
+    public List<User> getAll() {
         return db.getUsers();
     }
 

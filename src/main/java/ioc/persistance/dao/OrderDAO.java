@@ -39,7 +39,7 @@ public class OrderDAO{
      * then add Order to the FakeDB.
      * @param order
      */
-    @Autowired
+
     public void create(Order order){
         order.setSubmittedBy(UserContext.getCurrentUser().getName());
         db.getOrders().add(order);

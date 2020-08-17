@@ -24,6 +24,7 @@ public class Order {
         this.quantity = quantity;
     }
 
+
     public Order() {
     }
 
@@ -54,7 +55,6 @@ public class Order {
         return submittedBy;
     }
 
-    @Autowired
     public void setSubmittedBy(String submittedBy) {
         this.submittedBy = submittedBy;
     }

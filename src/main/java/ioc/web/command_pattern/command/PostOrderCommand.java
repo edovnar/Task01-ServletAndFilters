@@ -13,7 +13,7 @@ public class PostOrderCommand extends Command {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        OrderService orderService = (OrderService) context.getBean("orderService");
+        OrderService orderService = context.getBean(OrderService.class);
         Order order = new ObjectMapper().readValue(req.getReader(), Order.class);
 
         orderService.postOrder(order);

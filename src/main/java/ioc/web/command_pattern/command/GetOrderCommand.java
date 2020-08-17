@@ -12,8 +12,8 @@ public class GetOrderCommand extends Command {
 
     @Override
     public void execute(HttpServletRequest req, HttpServletResponse resp) throws IOException{
-        OrderService orderService = (OrderService) context.getBean("orderService");
+        OrderService orderService = context.getBean(OrderService.class);
         resp.setContentType("application/json");
-        resp.getWriter().write(JsonUtil.objectMapper.writeValueAsString(orderService.getOrdersFromCurrentUser()));
+        resp.getWriter().write(JsonUtil.OBJECT_MAPPER.writeValueAsString(orderService.getOrdersFromCurrentUser()));
     }
 }

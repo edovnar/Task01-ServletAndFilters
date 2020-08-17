@@ -7,7 +7,6 @@ import ioc.exception.UserNotFoundException;
 import ioc.persistance.dao.OrderDAO;
 import ioc.utils.UserContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
