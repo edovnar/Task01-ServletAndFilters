@@ -13,7 +13,6 @@ public class UserDAO {
 
     FakeDB db;
 
-    @Autowired
     private UserDAO(FakeDB db) {
         this.db = db;
     }

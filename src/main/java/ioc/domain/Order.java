@@ -1,10 +1,7 @@
 package ioc.domain;
 
-import org.springframework.stereotype.Component;
-
 import java.time.LocalDateTime;
 
-@Component
 public class Order {
     private String id;
     private LocalDateTime submittedAt;
@@ -22,7 +19,6 @@ public class Order {
         this.item = item;
         this.quantity = quantity;
     }
-
 
     public Order() {
     }

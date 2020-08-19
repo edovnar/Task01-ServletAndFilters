@@ -15,7 +15,6 @@ public class OrderDAO{
 
     FakeDB db;
 
-    @Autowired
     private OrderDAO(FakeDB db) {
         this.db = db;
     }

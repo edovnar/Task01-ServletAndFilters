@@ -6,7 +6,6 @@ import ioc.exception.OrderNotFoundException;
 import ioc.exception.UserNotFoundException;
 import ioc.persistance.dao.OrderDAO;
 import ioc.utils.UserContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -16,7 +15,6 @@ public class OrderService {
 
     private OrderDAO orderDAO;
 
-    @Autowired
     private OrderService(OrderDAO orderDAO) {
         this.orderDAO = orderDAO;
     }

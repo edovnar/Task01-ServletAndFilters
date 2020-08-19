@@ -1,5 +1,6 @@
 package ioc.web.command_pattern.command;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ioc.service.OrderService;
 import ioc.utils.AppContext;
 import ioc.utils.JsonUtil;
@@ -20,6 +21,7 @@ public class GetOrderByIDCommand extends Command {
         String id = req.getPathInfo().split("/")[2];
 
         resp.setContentType("application/json");
-        resp.getWriter().write(JsonUtil.OBJECT_MAPPER.writeValueAsString(orderService.getOrderByIdFromCurrentUser(id)));
+        ObjectMapper objectMapper = AppContext.getContext().getBean(JsonUtil.class).getObjectMapper();
+        resp.getWriter().write(objectMapper.writeValueAsString(orderService.getOrderByIdFromCurrentUser(id)));
     }
 }
