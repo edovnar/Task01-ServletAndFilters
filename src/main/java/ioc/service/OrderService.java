@@ -1,29 +1,23 @@
-package service;
+package ioc.service;
 
-import domain.Order;
-import domain.User;
-import exception.OrderNotFoundException;
-import exception.UserNotFoundException;
-import persistance.dao.OrderDAO;
-import utils.UserContext;
+import ioc.domain.Order;
+import ioc.domain.User;
+import ioc.exception.OrderNotFoundException;
+import ioc.exception.UserNotFoundException;
+import ioc.persistance.dao.OrderDAO;
+import ioc.utils.UserContext;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
-
+@Service
 public class OrderService {
 
     private OrderDAO orderDAO;
 
-    private OrderService() {
-        this.orderDAO = OrderDAO.getInstance();
+    private OrderService(OrderDAO orderDAO) {
+        this.orderDAO = orderDAO;
     }
-
-    private static class Singleton{
-        public static final OrderService INSTANCE = new OrderService();
-    }
-
-    public static OrderService getInstance(){ return OrderService.Singleton.INSTANCE; }
-
 
     public Set<Order> getOrdersFromCurrentUser() {
         return orderDAO.getByUserName(UserContext.getCurrentUser().getName());

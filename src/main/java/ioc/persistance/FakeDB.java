@@ -1,11 +1,13 @@
-package persistance;
+package ioc.persistance;
 
-import domain.Order;
-import domain.User;
+import ioc.domain.Order;
+import ioc.domain.User;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class FakeDB {
 
     private List<User> users = List.of(
@@ -13,14 +15,6 @@ public class FakeDB {
             new User("vice-admin","admin"));
 
     private List<Order> orders = new ArrayList<>();
-
-    private FakeDB() { }
-
-    private static class Singleton{
-        public static final FakeDB INSTANCE = new FakeDB();
-    }
-
-    public static FakeDB getInstance(){ return FakeDB.Singleton.INSTANCE; }
 
     public List<User> getUsers() {
         return users;

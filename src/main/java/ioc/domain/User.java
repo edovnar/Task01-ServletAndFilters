@@ -1,7 +1,4 @@
-package domain;
-
-import java.util.HashSet;
-import java.util.Set;
+package ioc.domain;
 
 public class User {
 

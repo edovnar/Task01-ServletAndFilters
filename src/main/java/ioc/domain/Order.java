@@ -1,4 +1,4 @@
-package domain;
+package ioc.domain;
 
 import java.time.LocalDateTime;
 
@@ -23,23 +23,52 @@ public class Order {
     public Order() {
     }
 
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
+    public String getId() {
+        return id;
+    }
 
-    public LocalDateTime getSubmittedAt() { return submittedAt; }
-    public void setSubmittedAt(LocalDateTime submittedAt) { this.submittedAt = submittedAt; }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
-    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+    public LocalDateTime getSubmittedAt() {
+        return submittedAt;
+    }
+    public void setSubmittedAt(LocalDateTime submittedAt) {
+        this.submittedAt = submittedAt;
+    }
 
-    public String getSubmittedBy() { return submittedBy; }
-    public void setSubmittedBy(String submittedBy) { this.submittedBy = submittedBy; }
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
 
-    public String getItem() { return item; }
-    public void setItem(String item) { this.item = item; }
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 
-    public Integer getQuantity() { return quantity; }
-    public void setQuantity(Integer quantity) { this.quantity = quantity; }
+    public String getSubmittedBy() {
+        return submittedBy;
+    }
+
+    public void setSubmittedBy(String submittedBy) {
+        this.submittedBy = submittedBy;
+    }
+
+    public String getItem() {
+        return item;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 
     @Override
     public String toString() {

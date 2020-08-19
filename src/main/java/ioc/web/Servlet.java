@@ -1,10 +1,10 @@
-package web;
+package ioc.web;
 
-import exception.CommandNotFoundException;
-import exception.OrderNotFoundException;
-import web.command_pattern.CommandDistributor;
+import ioc.exception.CommandNotFoundException;
+import ioc.exception.OrderNotFoundException;
+import ioc.utils.AppContext;
+import ioc.web.command_pattern.CommandDistributor;
 
-import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
@@ -20,8 +20,11 @@ public class Servlet extends HttpServlet {
     public void service(ServletRequest req, ServletResponse res) throws IOException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
+
         try {
-            CommandDistributor.getInstance().getCommand(request.getPathInfo(), request.getMethod()).execute(request, response);
+            AppContext.getContext().getBean(CommandDistributor.class)
+                    .getCommand(request.getPathInfo(), request.getMethod())
+                    .execute(request, response);
         } catch (OrderNotFoundException | CommandNotFoundException e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }

@@ -1,4 +1,4 @@
-package exception;
+package ioc.exception;
 
 public class OrderNotFoundException extends RuntimeException{
     public OrderNotFoundException() { }
