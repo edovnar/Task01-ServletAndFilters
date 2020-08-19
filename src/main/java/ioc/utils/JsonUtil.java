@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class JsonUtil {
-    public ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     private JsonUtil(){
         this.objectMapper = new ObjectMapper();
