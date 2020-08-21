@@ -12,11 +12,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/task1")
+@RequestMapping("/")
 public class CommandDistributor {
 
-    @RequestMapping(value = "/orders", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(method = RequestMethod.GET)
     public Set getOrders() {
+        System.out.println("hellloooooo");
         return new HashSet<Order>();
         //return AppContext.getContext().getBean(GetOrderCommand.class).execute();
     }
