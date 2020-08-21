@@ -9,7 +9,8 @@ import java.io.IOException;
 
 public abstract class Command {
 
-    public void execute(HttpServletRequest req, HttpServletResponse resp)
+    String execute(HttpServletRequest req, HttpServletResponse resp)
             throws IOException, UserNotFoundException, OrderNotFoundException {
+        return null;
     }
 }
