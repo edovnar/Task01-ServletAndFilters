@@ -28,7 +28,7 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework/spring-context
     // https://mvnrepository.com/artifact/org.springframework/spring-web
     // https://mvnrepository.com/artifact/org.springframework/org.springframework.web.servlet
-    implementation 'org.springframework:spring-context:5.2.8.RELEASE'
+  //  implementation 'org.springframework:spring-context:5.2.8.RELEASE'
     implementation 'org.springframework:spring-web:5.2.8.RELEASE'
     implementation 'org.springframework:org.springframework.web.servlet:3.2.2.RELEASE'
 

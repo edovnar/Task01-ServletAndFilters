@@ -1,12 +1,14 @@
 package ioc.web;
 
 import ioc.domain.Order;
-import org.springframework.web.bind.annotation.*;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping
 public class MainController {
-    static
 
     @GetMapping(path = "/orders")
     public Order getOrder() {

@@ -3,7 +3,6 @@ package ioc.persistance.dao;
 import ioc.domain.Order;
 import ioc.persistance.FakeDB;
 import ioc.utils.UserContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
