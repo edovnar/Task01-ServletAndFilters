@@ -1,7 +1,6 @@
 package ioc.web;
 
-import ioc.domain.Order;
-
+import ioc.domain.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,9 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping
 public class MainController {
 
-    @GetMapping(path = "/orders")
-    public Order getOrder() {
-        return new Order();
+    @GetMapping
+    public User getOrder() {
+        System.out.println("hiii");
+        return new User("hi", "there");
     }
 //        return AppContext.getContext().getBean(GetOrderCommand.class).execute();
 //    }
