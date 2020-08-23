@@ -2,7 +2,10 @@ package ioc.init;
 
 import ioc.init.config.RootConfig;
 import ioc.init.config.WebConfig;
+import ioc.web.filter.AuthFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import javax.servlet.Filter;
 
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
@@ -20,5 +23,10 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
     protected Class<?>[] getServletConfigClasses() {
         return new Class<?>[] { WebConfig.class };
     }
+
+//    @Override
+//    protected Filter[] getServletFilters() {
+//        return new Filter[]{new AuthFilter()};
+//    }
 }
 

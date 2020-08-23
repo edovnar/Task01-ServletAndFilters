@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
 @EnableWebMvc
-@ComponentScan("ioc")
+@ComponentScan("ioc.web")
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override

@@ -2,21 +2,19 @@
 //
 //import ioc.exception.UserNotFoundException;
 //import ioc.service.UserService;
-//import ioc.utils.AppContext;
 //import ioc.utils.UserContext;
-//import org.springframework.context.ApplicationContext;
-//import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 //
 //import javax.servlet.*;
-//import javax.servlet.annotation.WebFilter;
 //import javax.servlet.http.HttpServletRequest;
 //import javax.servlet.http.HttpServletResponse;
 //
+//import java.beans.beancontext.BeanContext;
+//import java.beans.beancontext.BeanContextServiceProvider;
 //import java.io.IOException;
 //import java.util.Base64;
 //
-////@WebFilter(filterName = "AuthFilter", urlPatterns = "/*")
 //public class AuthFilter implements Filter {
+//
 //
 //    @Override
 //    public void init(FilterConfig filterConfig){ }
