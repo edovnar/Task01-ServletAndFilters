@@ -1,27 +1,29 @@
 package ioc.init;
 
-import ioc.init.config.RootConfig;
-import ioc.init.config.WebConfig;
-import ioc.web.filter.AuthFilter;
-import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.context.support.GenericWebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
 
-import javax.servlet.Filter;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletRegistration;
 
-public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class WebAppInitializer implements WebApplicationInitializer {
 
-    @Override
-    protected String[] getServletMappings() {
-        return new String[]{"/"};
-    }
-
-    @Override
-    protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[] { RootConfig.class };
-    }
+    AnnotationConfigWebApplicationContext root =
+            new AnnotationConfigWebApplicationContext();
 
     @Override
-    protected Class<?>[] getServletConfigClasses() {
-        return new Class<?>[] { WebConfig.class };
+    public void onStartup(ServletContext servletContext) {
+
+        root.scan("ioc");
+        servletContext.addListener(new ContextLoaderListener(root));
+
+        ServletRegistration.Dynamic appServlet =
+                servletContext.addServlet("mvc", new DispatcherServlet(new GenericWebApplicationContext()));
+        appServlet.setLoadOnStartup(1);
+        appServlet.addMapping("/");
     }
 
 //    @Override
