@@ -1,9 +1,9 @@
 package ioc.init;
 
+import ioc.web.filter.AuthFilter;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.context.support.GenericWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.servlet.ServletContext;
@@ -11,24 +11,21 @@ import javax.servlet.ServletRegistration;
 
 public class WebAppInitializer implements WebApplicationInitializer {
 
-    AnnotationConfigWebApplicationContext root =
-            new AnnotationConfigWebApplicationContext();
+    public void onStartup(ServletContext container) {
+        AnnotationConfigWebApplicationContext context
+                = new AnnotationConfigWebApplicationContext();
+        context.setConfigLocation("ioc");
 
-    @Override
-    public void onStartup(ServletContext servletContext) {
+        container.addListener(new ContextLoaderListener(context));
 
-        root.scan("ioc");
-        servletContext.addListener(new ContextLoaderListener(root));
+        ServletRegistration.Dynamic dispatcher = container
+                .addServlet("dispatcher", new DispatcherServlet(context));
 
-        ServletRegistration.Dynamic appServlet =
-                servletContext.addServlet("mvc", new DispatcherServlet(new GenericWebApplicationContext()));
-        appServlet.setLoadOnStartup(1);
-        appServlet.addMapping("/");
+        dispatcher.setLoadOnStartup(1);
+        dispatcher.addMapping("/");
+
+        container.addFilter("AuthFilter", AuthFilter.class)
+        .addMappingForServletNames(null,false,"dispatcher");
     }
-
-//    @Override
-//    protected Filter[] getServletFilters() {
-//        return new Filter[]{new AuthFilter()};
-//    }
 }
 

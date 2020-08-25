@@ -24,7 +24,6 @@ public class OrderDAO{
                 .collect(Collectors.toSet());
     }
 
-
     public Optional<Order> getById(String id){
         return  db.getOrders().stream()
                 .filter(order -> order.getId().equals(id))
