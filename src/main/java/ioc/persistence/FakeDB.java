@@ -1,4 +1,4 @@
-package ioc.persistance;
+package ioc.persistence;
 
 import ioc.domain.Order;
 import ioc.domain.User;

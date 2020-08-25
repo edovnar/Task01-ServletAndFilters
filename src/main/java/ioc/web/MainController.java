@@ -2,7 +2,6 @@ package ioc.web;
 
 import ioc.domain.Order;
 import ioc.service.OrderService;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
@@ -11,7 +10,7 @@ import java.util.Set;
 @RequestMapping("/orders")
 public class MainController {
 
-    private final OrderService orderService;
+    private OrderService orderService;
 
     public MainController(OrderService orderService) {
         this.orderService = orderService;

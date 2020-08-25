@@ -2,7 +2,7 @@ package ioc.service;
 
 import ioc.domain.User;
 import ioc.exception.UserNotFoundException;
-import ioc.persistance.dao.UserDAO;
+import ioc.persistence.dao.UserDAO;
 import org.springframework.stereotype.Service;
 
 @Service

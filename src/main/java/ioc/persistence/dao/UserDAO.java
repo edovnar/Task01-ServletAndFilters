@@ -1,7 +1,7 @@
-package ioc.persistance.dao;
+package ioc.persistence.dao;
 
 import ioc.domain.User;
-import ioc.persistance.FakeDB;
+import ioc.persistence.FakeDB;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
