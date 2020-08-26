@@ -16,18 +16,18 @@ public class MainController {
         this.orderService = orderService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     public Set<Order> getOrders() {
        return orderService.getOrdersFromCurrentUser();
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public String postOrder(@RequestBody Order order) {
         orderService.postOrder(order);
         return "Order is accepted";
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public Order getOrderByID(@PathVariable String id){
         return orderService.getOrderByIdFromCurrentUser(id);
     }
