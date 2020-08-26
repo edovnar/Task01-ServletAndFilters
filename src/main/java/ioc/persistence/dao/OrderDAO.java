@@ -1,9 +1,8 @@
-package ioc.persistance.dao;
+package ioc.persistence.dao;
 
 import ioc.domain.Order;
-import ioc.persistance.FakeDB;
+import ioc.persistence.FakeDB;
 import ioc.utils.UserContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -24,7 +23,6 @@ public class OrderDAO{
                 .filter(order -> order.getSubmittedBy().equals(userName))
                 .collect(Collectors.toSet());
     }
-
 
     public Optional<Order> getById(String id){
         return  db.getOrders().stream()

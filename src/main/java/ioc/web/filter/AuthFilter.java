@@ -2,10 +2,9 @@ package ioc.web.filter;
 
 import ioc.exception.UserNotFoundException;
 import ioc.service.UserService;
-import ioc.utils.AppContext;
 import ioc.utils.UserContext;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -15,11 +14,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Base64;
 
-@WebFilter(filterName = "AuthFilter", urlPatterns = "/*")
+@WebFilter
 public class AuthFilter implements Filter {
 
+    private UserService userService;
+
     @Override
-    public void init(FilterConfig filterConfig){ }
+    public void init(FilterConfig filterConfig) {
+       WebApplicationContext context = WebApplicationContextUtils
+               .getWebApplicationContext(filterConfig.getServletContext());
+       this.userService = context.getBean(UserService.class);
+    }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -35,8 +40,6 @@ public class AuthFilter implements Filter {
 
                     String name = userInfo[0];
                     String password = userInfo[1];
-
-                    UserService userService = AppContext.getContext().getBean(UserService.class);
 
                     if (userService.getUser(name).getPassword().equals(password)){
                         UserContext.setCurrentUser(userService.getUser(name));

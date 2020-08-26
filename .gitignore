@@ -10,5 +10,3 @@
 .gradle
 build
 .idea
-!ioc.web.xml
-

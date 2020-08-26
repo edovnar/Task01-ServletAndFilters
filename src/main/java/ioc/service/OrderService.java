@@ -4,7 +4,7 @@ import ioc.domain.Order;
 import ioc.domain.User;
 import ioc.exception.OrderNotFoundException;
 import ioc.exception.UserNotFoundException;
-import ioc.persistance.dao.OrderDAO;
+import ioc.persistence.dao.OrderDAO;
 import ioc.utils.UserContext;
 import org.springframework.stereotype.Service;
 
